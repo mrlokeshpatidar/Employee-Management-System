@@ -1,0 +1,59 @@
+﻿***********************************************SP 1 start
+
+Create PROCEDURE [dbo].[empdetails_getall_paging]
+@PageNum int,
+@PageSize int
+
+AS
+BEGIN
+
+	WITH TempResult AS
+	(
+	          SELECT * FROM [dbo].[EmpDetails]
+	), 
+	TempCount AS
+	(
+		SELECT COUNT(*) AS  TotalRows FROM TempResult
+	)
+	SELECT *
+	FROM TempResult, TempCount
+	ORDER BY TempResult.[Id] desc
+	OFFSET (@PageNum - 1) * @PageSize ROWS
+	FETCH NEXT @PageSize ROWS ONLY; 
+END
+
+
+EXEC [empdetails_getall_paging]   @PageNum=1,@PageSize=3;
+
+***********************************************SP 1 end
+
+
+
+***********************************************SP 2 start
+
+Create PROCEDURE [dbo].[empsalary_getall_paging]
+@PageNum int,
+@PageSize int
+
+AS
+BEGIN
+
+	WITH TempResult AS
+	(
+	          SELECT * FROM [dbo].[EmpSalarys]
+	), 
+	TempCount AS
+	(
+		SELECT COUNT(*) AS  TotalRows FROM TempResult
+	)
+	SELECT *
+	FROM TempResult, TempCount
+	ORDER BY TempResult.[Id] desc
+	OFFSET (@PageNum - 1) * @PageSize ROWS
+	FETCH NEXT @PageSize ROWS ONLY; 
+END
+
+
+EXEC [empsalary_getall_paging]   @PageNum=1,@PageSize=3;
+
+***********************************************SP 1 start
